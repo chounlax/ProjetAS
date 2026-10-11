@@ -11,7 +11,10 @@
             <h1>Jean Dupont</h1>
             <p>jean.dupont@exemple.fr</p>
         </div>
-        <a href="#" class="btn btn-outline">Modifier le profil</a>
+        <div class="profile-actions">
+            <a href="#" class="btn btn-outline">Modifier le profil</a>
+            <a href="{{ path('app_logout') }}" class="btn btn-danger">Se déconnecter</a>
+        </div>
     </div>
 
     <div class="profile-grid">
@@ -21,8 +24,10 @@
                 <div class="info-item"><dt>Prénom</dt><dd>Jean</dd></div>
                 <div class="info-item"><dt>Nom</dt><dd>Dupont</dd></div>
                 <div class="info-item"><dt>E-mail</dt><dd>jean.dupont@exemple.fr</dd></div>
+                <div class="info-item"><dt>Mot de passe</dt><dd class="password-mask">••••••••</dd></div>
                 <div class="info-item"><dt>Membre depuis</dt><dd>Octobre 2026</dd></div>
             </dl>
+            <a href="#" class="btn btn-outline btn-block section-btn">Changer le mot de passe</a>
         </div>
 
         <div class="card profile-section">

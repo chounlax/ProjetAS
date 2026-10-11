@@ -14,7 +14,7 @@ final class BaseController extends AbstractController
         return $this->render('base/index.html.twig');
     }
 
-    #[Route('/profil', name: 'app_profile')]
+    #[Route('/private-profil', name: 'app_profile')]
     public function profile(): Response
     {
         return $this->render('profile/index.html.twig');
