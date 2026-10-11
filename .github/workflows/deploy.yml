@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Récupérer les dernières modifications
         run: |
-          cd /var/www/home/login5184/modele
+          cd /var/www/home/modele
           git -c safe.directory=/var/www/home/modele pull origin main
 
       - name: Installer les dépendances
