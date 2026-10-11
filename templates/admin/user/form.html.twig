@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }} · Administration{% endblock %}
+
+{% macro field(field, label = null) %}
+    <div class="form-group">
+        {{ form_label(field, label) }}
+        {{ form_widget(field) }}
+        <div class="form-error">{{ form_errors(field) }}</div>
+    </div>
+{% endmacro %}
+
+{% block body %}
+{% import _self as f %}
+<section class="auth-page">
+    <div class="card auth-card wide">
+        <p class="breadcrumb"><a href="{{ path('admin_user_index') }}">← Utilisateurs</a></p>
+        <h1>{{ title }}</h1>
+
+        {{ form_start(form) }}
+            {% if form_errors(form) is not empty %}
+                <div class="alert">{{ form_errors(form) }}</div>
+            {% endif %}
+
+            <div class="form-row">
+                {{ f.field(form.prenom) }}
+                {{ f.field(form.nom) }}
+            </div>
+            {{ f.field(form.email) }}
+            {{ f.field(form.adresse) }}
+            <div class="form-row zip">
+                {{ f.field(form.codePostal) }}
+                {{ f.field(form.ville) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.roles) }}
+                <div class="choice-list">
+                    {% for choice in form.roles %}
+                        <div class="form-check">
+                            {{ form_widget(choice) }}
+                            {{ form_label(choice) }}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="form-error">{{ form_errors(form.roles) }}</div>
+            </div>
+
+            <div class="form-check">
+                {{ form_widget(form.isActive) }}
+                {{ form_label(form.isActive) }}
+            </div>
+
+            <div class="form-row">
+                {{ f.field(form.plainPassword.first) }}
+                {{ f.field(form.plainPassword.second) }}
+            </div>
+            <div class="form-error">{{ form_errors(form.plainPassword) }}</div>
+
+            {% include 'partials/_password_rules.html.twig' %}
+
+            <button type="submit" class="btn btn-primary btn-block">Enregistrer</button>
+        {{ form_end(form) }}
+    </div>
+</section>
+{% endblock %}

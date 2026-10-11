@@ -46,15 +46,28 @@
 						<a href="{{ path('app_login') }}" class="nav-link {{ route == 'app_login' ? 'active' }}">Se connecter</a>
 						<a href="{{ path('app_register') }}" class="btn btn-primary">S'inscrire</a>
 					{% else %}
-						<a href="{{ path('app_profile') }}" class="nav-link {{ route == 'app_profile' ? 'active' }}">Profil</a>
+						<a href="{{ path('app_profile') }}" class="nav-link {{ route starts with 'app_profile' or route == 'app_change_password' ? 'active' }}">Profil</a>
+						{% if is_granted('ROLE_ADMIN') %}
+							<a href="{{ path('admin_user_index') }}" class="nav-link {{ route starts with 'admin_' ? 'active' }}">Administration</a>
+						{% endif %}
+						<a href="{{ path('app_logout') }}" class="nav-link">Se déconnecter</a>
 					{% endif %}
-
-
 				</nav>
 			</div>
 		</header>
 
 		<main>
+			{% set flashes = app.flashes(['success', 'error']) %}
+			{% if flashes.success is not empty or flashes.error is not empty %}
+				<div class="container flash-zone">
+					{% for message in flashes.success %}
+						<div class="flash flash-success">{{ message }}</div>
+					{% endfor %}
+					{% for message in flashes.error %}
+						<div class="flash flash-error">{{ message }}</div>
+					{% endfor %}
+				</div>
+			{% endif %}
 			{% block body %}{% endblock %}
 		</main>
 

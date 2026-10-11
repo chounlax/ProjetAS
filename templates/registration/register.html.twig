@@ -36,7 +36,13 @@
                 {{ f.field(registrationForm.ville, 'Ville', 'Paris') }}
             </div>
 
-            {{ f.field(registrationForm.plainPassword, 'Mot de passe', 'Majuscule, chiffre et caractère spécial') }}
+            <div class="form-row">
+                {{ f.field(registrationForm.plainPassword.first, 'Mot de passe', '12 caractères minimum') }}
+                {{ f.field(registrationForm.plainPassword.second, 'Confirmer le mot de passe', 'Retapez-le') }}
+            </div>
+            <div class="form-error">{{ form_errors(registrationForm.plainPassword) }}</div>
+
+            {% include 'partials/_password_rules.html.twig' %}
 
             <div class="form-check">
                 {{ form_widget(registrationForm.agreeTerms) }}

@@ -3,16 +3,18 @@
 {% block title %}Mon profil · ProjetAS{% endblock %}
 
 {% block body %}
-{# Valeurs d'exemple : à remplacer plus tard par app.user.nom, app.user.email, etc. #}
+{% set user = app.user %}
 <section class="container profile-page">
     <div class="card profile-header">
-        <div class="avatar">JD</div>
+        <div class="avatar">{{ user.initiales }}</div>
         <div>
-            <h1>Jean Dupont</h1>
-            <p>jean.dupont@exemple.fr</p>
+            <h1>{{ user.nomComplet }}</h1>
+            <p>{{ user.email }}</p>
         </div>
         <div class="profile-actions">
-            <a href="#" class="btn btn-outline">Modifier le profil</a>
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('admin_user_index') }}" class="btn btn-outline">Administration</a>
+            {% endif %}
             <a href="{{ path('app_logout') }}" class="btn btn-danger">Se déconnecter</a>
         </div>
     </div>
@@ -21,21 +23,24 @@
         <div class="card profile-section">
             <h2>Informations personnelles</h2>
             <dl class="info-list">
-                <div class="info-item"><dt>Prénom</dt><dd>Jean</dd></div>
-                <div class="info-item"><dt>Nom</dt><dd>Dupont</dd></div>
-                <div class="info-item"><dt>E-mail</dt><dd>jean.dupont@exemple.fr</dd></div>
+                <div class="info-item"><dt>Prénom</dt><dd>{{ user.prenom }}</dd></div>
+                <div class="info-item"><dt>Nom</dt><dd>{{ user.nom }}</dd></div>
+                <div class="info-item"><dt>E-mail</dt><dd>{{ user.email }}</dd></div>
                 <div class="info-item"><dt>Mot de passe</dt><dd class="password-mask">••••••••</dd></div>
-                <div class="info-item"><dt>Membre depuis</dt><dd>Octobre 2026</dd></div>
+                <div class="info-item"><dt>Rôle</dt><dd>{{ user.admin ? 'Administrateur' : 'Utilisateur' }}</dd></div>
+                {% if user.createdAt %}
+                    <div class="info-item"><dt>Membre depuis</dt><dd>{{ user.createdAt|date('d/m/Y') }}</dd></div>
+                {% endif %}
             </dl>
-            <a href="#" class="btn btn-outline btn-block section-btn">Changer le mot de passe</a>
+            <a href="{{ path('app_change_password') }}" class="btn btn-outline btn-block section-btn">Changer le mot de passe</a>
         </div>
 
         <div class="card profile-section">
             <h2>Adresse</h2>
             <dl class="info-list">
-                <div class="info-item"><dt>Adresse</dt><dd>12 rue de la Paix</dd></div>
-                <div class="info-item"><dt>Code postal</dt><dd>75001</dd></div>
-                <div class="info-item"><dt>Ville</dt><dd>Paris</dd></div>
+                <div class="info-item"><dt>Adresse</dt><dd>{{ user.adresse }}</dd></div>
+                <div class="info-item"><dt>Code postal</dt><dd>{{ user.codePostal }}</dd></div>
+                <div class="info-item"><dt>Ville</dt><dd>{{ user.ville }}</dd></div>
             </dl>
         </div>
     </div>
