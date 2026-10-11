@@ -1,0 +1,30 @@
+name: Déploiement sur la machine de test
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Récupérer les dernières modifications
+        run: |
+          cd /var/www/home/login5184/modele
+          git -c safe.directory=/home/login5184/modele pull origin main
+
+      - name: Installer les dépendances
+        run: |
+          cd /var/www/home/login5184/modele
+          composer install --no-interaction
+
+      - name: Mettre à jour la base de données
+        run: |
+          cd /var/www/home/login5184/modele
+          php bin/console doctrine:migrations:migrate --no-interaction
+
+      - name: Vider le cache
+        run: |
+          cd /var/www/home/login5184/modele
+          php bin/console cache:clear
