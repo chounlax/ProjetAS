@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon profil · ProjetAS{% endblock %}
+
+{% block body %}
+{# Valeurs d'exemple : à remplacer plus tard par app.user.nom, app.user.email, etc. #}
+<section class="container profile-page">
+    <div class="card profile-header">
+        <div class="avatar">JD</div>
+        <div>
+            <h1>Jean Dupont</h1>
+            <p>jean.dupont@exemple.fr</p>
+        </div>
+        <a href="#" class="btn btn-outline">Modifier le profil</a>
+    </div>
+
+    <div class="profile-grid">
+        <div class="card profile-section">
+            <h2>Informations personnelles</h2>
+            <dl class="info-list">
+                <div class="info-item"><dt>Prénom</dt><dd>Jean</dd></div>
+                <div class="info-item"><dt>Nom</dt><dd>Dupont</dd></div>
+                <div class="info-item"><dt>E-mail</dt><dd>jean.dupont@exemple.fr</dd></div>
+                <div class="info-item"><dt>Membre depuis</dt><dd>Octobre 2026</dd></div>
+            </dl>
+        </div>
+
+        <div class="card profile-section">
+            <h2>Adresse</h2>
+            <dl class="info-list">
+                <div class="info-item"><dt>Adresse</dt><dd>12 rue de la Paix</dd></div>
+                <div class="info-item"><dt>Code postal</dt><dd>75001</dd></div>
+                <div class="info-item"><dt>Ville</dt><dd>Paris</dd></div>
+            </dl>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,29 +1,55 @@
 {% extends 'base.html.twig' %}
-{% block title %}
-	{{parent()}}
-	Inscription
-{% endblock %}
+
+{% block title %}Inscription · ProjetAS{% endblock %}
+
+{% macro field(field, label, placeholder) %}
+    <div class="form-group">
+        {{ form_label(field, label) }}
+        {{ form_widget(field, {attr: {placeholder: placeholder}}) }}
+        <div class="form-error">{{ form_errors(field) }}</div>
+    </div>
+{% endmacro %}
+
 {% block body %}
-	<div class="container-fluid">
-		<h1 class="text-center text-primary mt-4 pt-4 display-1 fw-bold">Inscription</h1>
-	</h1>
-	<div class="row justify-content-center">
-		<div class="col-12 col-md-6 bg-white p-4 m-0 text-primary">
-			{{ form_errors(registrationForm) }}
-			{{ form_start(registrationForm) }}
-			{{ form_row(registrationForm.nom) }}
-			{{ form_row(registrationForm.prenom) }}
-			{{ form_row(registrationForm.adresse) }}
-			{{ form_row(registrationForm.ville) }}
-			{{ form_row(registrationForm.codePostal) }}
-			{{ form_row(registrationForm.email) }}
-			{{ form_row(registrationForm.plainPassword, {label: 'Password'}) }}
-			{{ form_row(registrationForm.agreeTerms) }}
-			<div class="text-center">
-				<button class="btn btn-lg btn-primary mt-2" type="submit">
-					S'inscrire</button>
-			</div>
-			{{ form_end(registrationForm) }}
-		</div>
-	</div>
-</div>{% endblock %}
+{% import _self as f %}
+<section class="auth-page">
+    <div class="card auth-card wide">
+        <h1>Créer un compte</h1>
+        <p class="subtitle">Quelques informations et c'est parti.</p>
+
+        {{ form_start(registrationForm) }}
+            {% if not registrationForm.vars.valid and form_errors(registrationForm) is not empty %}
+                <div class="alert">{{ form_errors(registrationForm) }}</div>
+            {% endif %}
+
+            <div class="form-row">
+                {{ f.field(registrationForm.prenom, 'Prénom', 'Jean') }}
+                {{ f.field(registrationForm.nom, 'Nom', 'Dupont') }}
+            </div>
+
+            {{ f.field(registrationForm.email, 'Adresse e-mail', 'vous@exemple.fr') }}
+
+            {{ f.field(registrationForm.adresse, 'Adresse', '12 rue de la Paix') }}
+
+            <div class="form-row zip">
+                {{ f.field(registrationForm.codePostal, 'Code postal', '75001') }}
+                {{ f.field(registrationForm.ville, 'Ville', 'Paris') }}
+            </div>
+
+            {{ f.field(registrationForm.plainPassword, 'Mot de passe', 'Majuscule, chiffre et caractère spécial') }}
+
+            <div class="form-check">
+                {{ form_widget(registrationForm.agreeTerms) }}
+                {{ form_label(registrationForm.agreeTerms, "J'accepte les conditions d'utilisation") }}
+            </div>
+            <div class="form-error terms-error">{{ form_errors(registrationForm.agreeTerms) }}</div>
+
+            <button type="submit" class="btn btn-primary btn-block">Créer mon compte</button>
+        {{ form_end(registrationForm) }}
+
+        <p class="auth-footer">
+            Déjà inscrit ? <a href="{{ path('app_login') }}">Se connecter</a>
+        </p>
+    </div>
+</section>
+{% endblock %}
