@@ -11,20 +11,20 @@ jobs:
     steps:
       - name: Récupérer les dernières modifications
         run: |
-          cd /var/www/home/modele
-          git -c safe.directory=/var/www/home/modele pull origin main
+          cd /var/www/html/modele
+          git -c safe.directory=/var/www/html/modele pull origin main
 
       - name: Installer les dépendances
         run: |
-          cd /var/www/home/modele
+          cd /var/www/html/modele
           composer install --no-interaction
 
       - name: Mettre à jour la base de données
         run: |
-          cd /var/www/home/modele
+          cd /var/www/html/modele
           php bin/console doctrine:migrations:migrate --no-interaction
 
       - name: Vider le cache
         run: |
-          cd /var/www/home/modele
+          cd /var/www/html/modele
           php bin/console cache:clear
